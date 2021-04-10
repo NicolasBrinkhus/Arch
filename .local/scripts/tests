@@ -1,0 +1,10 @@
+#!/bin/sh
+
+
+#hdmi_check=$(xrandr | grep 'connect' | grep 'HDMI' | awk '{print$1}')
+
+#[[ -z "$hdmi_check" ]] && echo 'display' || echo 'no display'
+
+transmission_daemon=$(pidof tranmission-daemon)
+
+[[ -z "$transmission_daemon" ]] && echo "$@" || echo 'no display'

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+choice="$(printf "Yes\\nNo" | dmenu -i -p "Shutdow Computer?")" || exit 1
+
+case $choice in
+	Yes) sudo -A shutdown -h now ;;
+	No) exit 1 ;;
+esac
