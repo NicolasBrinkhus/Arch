@@ -1,0 +1,32 @@
+#!/bin/bash
+
+command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d" # Use neovim for vim if present.
+
+export FZF_COMPLETION_TRIGGER='~~'
+
+vf() {
+  local out file key
+  IFS=$'\n' out=("$( find $HOME/.local/* $HOME/.config/* -type f | fzf --query="$1" --exit-0 --expect=ctrl-b,ctrl-e)")
+  key=$(head -1 <<< "$out")
+  file=$(head -2 <<< "$out" | tail -1)
+  if [ -n "$file" ]; then
+    [ "$key" = ctrl-b ] && bash "$file" || ${EDITOR:-nvim} "$file"
+  fi
+}
+#vf() { find $HOME/.local/* $HOME/.config/* -type f | fzf | xargs -r nvim ;}
+# Modified version where you can press
+#   - CTRL-O to open with `open` command,
+#   - CTRL-E or Enter key to open with the $EDITOR
+vs() {
+  local out file key
+  IFS=$'\n' out=("$( find $HOME/Projects/* -type d | fzf --query="$1" --exit-0 --expect=ctrl-v,ctrl-e)")
+  key=$(head -1 <<< "$out")
+  file=$(head -2 <<< "$out" | tail -1)
+  if [ -n "$file" ]; then
+    [ "$key" = ctrl-v ] && code "$file" || cd "$file"
+  fi
+}
+
+pacpac() {
+ pacman -Slq | fzf -m --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S
+}

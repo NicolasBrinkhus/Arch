@@ -1,0 +1,278 @@
+;==========================================================
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;==========================================================
+
+[global/wm]
+margin-bottom = 0
+margin-top = 2
+
+[bar/bot]
+width = 100%
+height = 24
+offset-x = 0
+offset-y = 0
+radius = 0.0
+fixed-center = true
+bottom = true
+monitor = HDMI2
+monitor-fallback = eDP1
+monitor-strict = false
+;override-redirect = true
+padding-left = 1
+padding-right = 1
+;border-size = 1
+border-bottom-size = 1
+border-color = ${colors.black}
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+radius-top = 0.0
+radius-bottom = 0.0
+padding = 0
+
+;enable-ipc = true
+
+;modules-left = mpd
+modules-center = arch web linux git youtube
+modules-right = xbacklight pulseaudio powermenu 
+
+font-0 = "FontAwesome:style=Regular:size=16;3"
+;font-0 = "Inconsolata:size=9;2;"
+font-1 = "Iosevka Nerd Font:size=16;3"
+
+separator =
+spacing = 0
+
+wm-name = bot
+locale = 
+
+tray-position = none
+tray-detached = false
+tray-maxsize = 16
+tray-transparent = false
+;tray-background = some color
+tray-offset-x = 0
+tray-offset-y = 0
+tray-padding = 0
+tray-scale = 1.0
+
+cursor-click = pointer
+
+; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+;;
+;;      __  ___          __      __         
+;;     /  |/  /___  ____/ /_  __/ /__  _____
+;;    / /|_/ / __ \/ __  / / / / / _ \/ ___/
+;;   / /  / / /_/ / /_/ / /_/ / /  __(__  ) 
+;;  /_/  /_/\____/\__,_/\__,_/_/\___/____/  
+;;
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[module/mpd]
+type = internal/mpd
+
+host = 127.0.0.1
+port = 6600
+interval = 1
+
+format-online =    <label-song> <icon-random> <icon-repeat> <icon-prev> <toggle> <icon-next> 
+
+format-online-foreground = ${colors.light-blue}
+
+label-song =  "%artist% - %title%"
+label-song-maxlen = 50
+label-song-ellipsis = true
+
+label-offline = ---
+format-offline = <label-offline>
+
+icon-prev = "  "
+icon-seekb = 
+icon-stop = 
+icon-play = "  "
+icon-pause = 
+icon-pause-foreground = ${colors.light-blue}
+icon-next = "   "
+icon-seekf = 
+
+icon-random = "  " 
+icon-repeat = "  "
+
+toggle-on-foreground = ${colors.light-blue}
+toggle-off-foreground = #fff
+
+[module/web]
+type = custom/text
+content = "%{T3}%{T-}"
+content-foreground = ${colors.orange}
+content-background = ${colors.background}
+content-padding = 2
+click-left  = firefox &
+
+[module/arch]
+type = custom/text
+content = "%{T3}%{T-}"
+content-foreground = ${colors.blue}
+content-background = ${colors.background}
+content-padding = 2
+;click-left  = 
+
+;[module/customhook]
+;type = custom/ipc
+;hook-0 = echo hook
+;hook-1 = notify-send "hello Linux"
+;hook-2 = echo "%{F#FF00FF}hello%{-F}"
+;initial = 1
+;click-left = polybar-msg hook customhook 2
+;click-right = polybar-msg hook customhook 3
+
+[module/linux]
+type = custom/text
+content = "%{T3}%{T-}"
+content-foreground = ${colors.indigo}
+content-background = ${colors.background}
+content-padding = 2
+;click-left  = 
+
+[module/git]
+type = custom/text
+content = "%{T3}%{T-}"
+content-foreground = ${colors.grey}
+content-background = ${colors.background}
+content-padding = 2
+;click-left  = 
+
+[module/youtube]
+type = custom/text
+content = "%{T3}%{T-}"
+content-foreground = ${colors.themePri}
+content-background = ${colors.background}
+content-padding = 2
+;click-left  = 
+
+
+;-------------------------------------------------
+;                                                ;
+;          		POWER MENU PARAMETERS		 	 ;
+;                                                ;
+;-------------------------------------------------
+
+[module/bluetooth]
+type = custom/script
+exec = $HOME/.local/bin/bluetooth.sh
+interval = 2
+click-left = exec blueberry
+click-right = exec path/to/scripts/config/polybar/toggle_bluetooth.sh
+format-padding = 1
+format-background = #000000
+format-foreground = #ffffff
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label> <bar>
+format-foreground = ${colors.yellow}
+label = "ﯦ "
+
+
+bar-width = 10
+bar-indicator = 
+bar-indicator-foreground = #fff
+bar-indicator-font = 2
+bar-fill = 
+bar-fill-font = 2
+bar-fill-foreground = ${colors.themePri}
+bar-empty = 
+bar-empty-font = 2
+bar-empty-foreground = ${colors.white}
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume> <bar-volume>
+label-volume = "    "
+label-volume-foreground = ${colors.white}
+
+label-muted = 
+label-muted-foreground = #fff
+label-muted-padding = 1
+
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.themePri}
+bar-volume-foreground-1 = ${colors.themePri}
+bar-volume-foreground-2 = ${colors.themePri}
+bar-volume-foreground-3 = ${colors.themePri}
+bar-volume-foreground-4 = ${colors.themePri}
+bar-volume-foreground-5 = ${colors.themePri}
+bar-volume-foreground-6 = ${colors.themePri}
+bar-volume-gradient = true
+bar-volume-indicator = 
+bar-volume-indicator-font = 2
+bar-volume-fill = 
+bar-volume-fill-font = 2
+bar-volume-empty = 
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.white}
+
+[module/powermenu]
+type = custom/text
+content = "  %{T2}%{T-} "
+content-foreground = ${colors.themePri}
+content-background = ${colors.background}
+click-left = prompt "Shutdown computer?" "sudo -A shutdown -h now" 
+
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+;;
+;;	   ______      __               
+;;	  / ____/___  / /___  __________
+;;	 / /   / __ \/ / __ \/ ___/ ___/
+;;	/ /___/ /_/ / / /_/ / /  (__  ) 
+;;	\____/\____/_/\____/_/  /____/  
+;;
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[colors]
+background = #aa2F343F
+background-alt = #444
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+themePri = #C10F0D
+themeSec = #D54543
+
+trans = #00000000
+white = #FFFFFF
+black = #000000
+
+red = #e53935
+pink = #d81b60
+purple = #8e24aa
+deep-purple = #5e35b1
+indigo = #3949ab
+blue = #1e88e5
+light-blue = #039be5
+cyan = #00acc1
+teal = #00897b
+green = #43a047
+light-green = #7cb342
+lime = #c0ca33
+yellow = #fdd835
+amber = #ffb300
+orange = #fb8c00
+deep-orange = #f4511e
+brown = #6d4c41
+grey = #757575
+blue-gray = #546e7a
+
